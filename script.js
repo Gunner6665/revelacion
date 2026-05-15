@@ -313,10 +313,23 @@ class ArbolRevelacion {
 }
 
 // ============================================================
-//  INICIALIZACIÓN DE INSTANCIAS DEL PROYECTO
+//  INICIALIZACIÓN DE INSTANCIAS DEL PROYECTO CON PROTECCIÓN
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-    new PaginaTeam();
-    new FormularioDedicatoria(db, storage);
-    new ArbolRevelacion(db);
+
+    // 1. Si estamos en pageb.html (existen los botones de team), iniciamos PaginaTeam
+    if (document.getElementById('btnNino') || document.getElementById('btnNina')) {
+        new PaginaTeam();
+    }
+
+    // 2. Si estamos en pagec.html (existe el formulario de dedicatoria), iniciamos FormularioDedicatoria
+    if (document.getElementById('dedicatoriaForm')) {
+        new FormularioDedicatoria(db, storage);
+    }
+
+    // 3. Si estamos en paged.html (existe el contenedor del árbol), iniciamos ArbolRevelacion
+    if (document.getElementById('treeContainer')) {
+        new ArbolRevelacion(db);
+    }
+
 });
