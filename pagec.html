@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revelación de Género</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="canvas">
+    <div class="main-card">
+        <h1 class="invitation-title">Dedicatoria</h1>
+
+        <div class="hero-section">
+            <div class="character">
+                <img src="elefante.png" alt="Baby Boy" class="img-large">
+                <p class="ninos">Niño</p>
+            </div>
+            <div class="character">
+                <img src="elefanta.png" alt="Baby Girl" class="img-large">
+                <p class="ninas">Niña</p>
+            </div>
+        </div>
+
+        <form id="dedicatoriaForm" class="info-glass" style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <div style="display: flex; justify-content: center;">
+                <label for="cameraInput" style="cursor: pointer;">
+                    <div id="photoPreview" style="width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px dashed #fff; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <span id="placeholderText">📸</span>
+                    </div>
+                </label>
+                <input type="file" id="cameraInput" accept="image/*" capture="user" style="display: none;">
+            </div>
+
+            <input type="text" id="nombre" placeholder="Nombre completo" required class="btn-secondary" style="background: rgba(255,255,255,0.1); text-align: left;">
+            
+            <input type="text" id="parentesco" placeholder="Parentesco (Tío, Abuela...)" required class="btn-secondary" style="background: rgba(255,255,255,0.1); text-align: left;">
+            
+            <textarea id="mensaje" placeholder="Escribe tu dedicatoria para el bebé..." rows="4" required class="btn-secondary" style="background: rgba(255,255,255,0.1); text-align: left; height: auto;"></textarea>
+
+            <button type="submit" class="btn-primary">Enviar Dedicatoria</button>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>

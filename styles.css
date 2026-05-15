@@ -1,0 +1,452 @@
+/* Importamos una fuente más estilizada y elegante para el título */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Oswald:wght@300;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Oswald', sans-serif;
+    background-color: #000;
+}
+
+.canvas {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Tu fondo original como base total */
+    background: url('fondo.png');
+    background-size: cover;
+
+    padding: 15px;
+}
+
+.main-card {
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    position: relative;
+}
+
+.invitation-title {
+    font-family: 'Great Vibes', cursive;
+    /* Tipografía mucho más estilizada */
+    font-size: 5.5rem;
+    color: #fff;
+    margin: 0;
+    padding-top: 10px;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.9),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(255, 193, 7, 0.7),
+        3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.invitation-text {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    font-family: cooper-black, sans-serif;
+}
+
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -20px;
+    /* Sube un poco para integrarse con el título */
+    margin-bottom: 20px;
+}
+
+.ninos {
+    font-family: 'Great Vibes', cursive;
+    /* Tipografía mucho más estilizada */
+    font-size: 5.5rem;
+    color: #fff;
+    margin: 0;
+    padding-top: 10px;
+    text-shadow:
+        0 0 5px rgba(0, 191, 255, 0.9),
+        0 0 10px rgba(0, 191, 255, 0.8),
+        0 0 20px rgba(30, 144, 255, 0.8),
+        0 0 40px rgba(0, 128, 255, 0.7),
+        3px 3px 5px rgba(0, 0, 0, 0.5);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    width: auto;
+}
+
+.ninas {
+    font-family: 'Great Vibes', cursive;
+    /* Tipografía mucho más estilizada */
+    font-size: 5.5rem;
+    color: #fff;
+    margin: 0;
+    padding-top: 10px;
+    text-shadow:
+        0 0 5px rgba(255, 20, 147, 0.9),
+        0 0 10px rgba(255, 20, 147, 0.8),
+        0 0 20px rgba(255, 105, 180, 0.8),
+        0 0 40px rgba(255, 0, 255, 0.7),
+        3px 3px 5px rgba(0, 0, 0, 0.5);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    width: auto;
+}
+
+.character {
+    width: 48%;
+}
+
+.img-large {
+    width: 100%;
+    height: auto;
+    /* Sombra para que resalten del fondo de madera */
+    filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.8));
+}
+
+.info-glass {
+    background: rgba(0, 0, 0, 0.3);
+    /* Negro muy suave y transparente */
+    backdrop-filter: blur(5px);
+    /* Efecto de cristal esmerilado */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.data-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0;
+    color: #fff;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+
+.symbol {
+    margin-right: 3px;
+    font-size: 1.4rem;
+}
+
+.code-text {
+    margin-top: 15px;
+    color: #ccc;
+    font-style: italic;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1rem;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-primary {
+    background: #fff;
+    color: #000;
+    border: none;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #6a1b9a;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.9),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(255, 193, 7, 0.7),
+        3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.btn-secondary:hover {
+    background: rgba(106, 27, 154, 0.3);
+    box-shadow: 0 0 15px #6a1b9a;
+}
+
+.team-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.counter-inner {
+    display: inline-flex;
+    gap: 28px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 10px 28px;
+    align-items: center;
+}
+
+.counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.counter-num {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.counter-num.nina {
+    color: #ff9dd0;
+    text-shadow: 0 0 8px rgba(255, 105, 180, 0.8);
+}
+
+.counter-num.nino {
+    color: #9de4ff;
+    text-shadow: 0 0 8px rgba(100, 200, 255, 0.8);
+}
+
+.counter-num.total {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.counter-label {
+    font-size: 0.58rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 2px;
+}
+
+.counter-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 350px;
+    background: rgba(12, 12, 22, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px;
+    overflow: hidden;
+    animation: modalIn 0.28s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 22px 22px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.modal-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.modal-avatar-placeholder {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.modal-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+    color: #fff;
+    line-height: 1.1;
+}
+
+.modal-team-tag {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+.modal-team-tag.nina {
+    color: #ff9dd0;
+}
+
+.modal-team-tag.nino {
+    color: #9de4ff;
+}
+
+.modal-body {
+    padding: 16px 22px 22px;
+}
+
+.modal-familiarity {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+}
+
+.modal-dedication {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.75;
+    font-style: italic;
+}
+
+.modal-close {
+    display: block;
+    width: calc(100% - 44px);
+    margin: 0 22px 20px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Contenedor del mapa del árbol */
+.tree-container {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.tree-base-img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* Elefantitos dinámicos en las ramas */
+.avatar-leaf {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+.avatar-leaf:hover {
+    transform: scale(1.2);
+}
+
+.avatar-leaf img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-leaf .leaf-name {
+    font-size: 0.6rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+    text-shadow: none;
+    letter-spacing: 0.5px;
+}
+
+/* Modal imagen circular */
+.modal-avatar-img {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
