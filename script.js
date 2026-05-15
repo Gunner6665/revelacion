@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnConfirmar = document.getElementById('confirmBtn');
 
-    btnConfirmar?.addEventListener('click', () => {
+    btnConfirmar.addEventListener('click', () => {
         const nombre = prompt("Por favor, ingresa tu nombre completo para confirmar tu asistencia:");
         if (nombre !== null && nombre.trim() !== "") {
             const templateParams = {
