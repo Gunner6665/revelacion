@@ -259,6 +259,7 @@ html {
     background: rgba(255, 255, 255, 0.12);
 }
 
+/*
 .modal-overlay {
     display: none;
     position: fixed;
@@ -269,6 +270,36 @@ html {
     align-items: center;
     justify-content: center;
     padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex; 
+}
+    */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    /* Fondo oscuro transparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+
+    /* --- IMPORTANTE: Asegúrate de que empiece oculto de alguna de estas formas --- */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    /* Para que aparezca con un efecto suave */
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .modal-overlay.open {
