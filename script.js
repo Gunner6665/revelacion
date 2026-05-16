@@ -68,7 +68,7 @@ class PaginaTeam {
 }
 
 // ============================================================
-//  MÓDULO: PAGEC — Captura y Envío de Dedicatoria (SIN STORAGE)
+//  MÓDULO: PAGEC — Captura y Envío de Dedicatoria (CON COMPRESIÓN)
 // ============================================================
 class FormularioDedicatoria {
     constructor(db) {
@@ -76,7 +76,7 @@ class FormularioDedicatoria {
         this.form = document.getElementById('dedicatoriaForm');
         this.cameraInput = document.getElementById('cameraInput');
         this.preview = document.getElementById('photoPreview');
-        this.fotoBase64 = ""; // Guardamos la imagen codificada como texto
+        this.fotoBase64 = ""; // Guardaremos la imagen optimizada aquí
 
         if (this.form) {
             this.init();
@@ -84,15 +84,51 @@ class FormularioDedicatoria {
     }
 
     init() {
-        // Lógica de la cámara integrada dentro del objeto formulario
         if (this.cameraInput) {
             this.cameraInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        this.fotoBase64 = event.target.result;
-                        this.preview.innerHTML = `<img src="${this.fotoBase64}" style="width:100%; height:100%; object-fit:cover;">`;
+                        const img = new Image();
+                        img.src = event.target.result;
+
+                        img.onload = () => {
+                            // --- PROCESO DE COMPRESIÓN ULTRA-RÁPIDA ---
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+
+                            // Definimos un tamaño máximo ideal para el avatar del modal
+                            const MAX_WIDTH = 400;
+                            const MAX_HEIGHT = 400;
+                            let width = img.width;
+                            let height = img.height;
+
+                            // Mantenemos la proporción original de la foto
+                            if (width > height) {
+                                if (width > MAX_WIDTH) {
+                                    height *= MAX_WIDTH / width;
+                                    width = MAX_WIDTH;
+                                }
+                            } else {
+                                if (height > MAX_HEIGHT) {
+                                    width *= MAX_HEIGHT / height;
+                                    height = MAX_HEIGHT;
+                                }
+                            }
+
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            // Dibujamos la foto en el lienzo pequeño
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Convertimos a Base64 reduciendo la calidad al 60% (pesa poquísimo y se ve genial)
+                            this.fotoBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+                            // Mostramos la previsualización en el recuadro
+                            this.preview.innerHTML = `<img src="${this.fotoBase64}" style="width:100%; height:100%; object-fit:cover;">`;
+                        };
                     };
                     reader.readAsDataURL(file);
                 }
@@ -106,13 +142,11 @@ class FormularioDedicatoria {
             btn.disabled = true;
 
             try {
-                // Si el usuario no se tomó foto, le asignamos la silueta de bebé por defecto
+                // Si no hay selfie, se usa la silueta por defecto
                 let fotoFinal = this.fotoBase64 || "https://cdn-icons-png.flaticon.com/512/3069/3069172.png";
 
-                // Obtenemos el equipo guardado en memoria local
                 const teamAsignado = localStorage.getItem('selectedTeam') || 'nino';
 
-                // Guardar directamente en Firestore (Evitando llamadas fallidas de Storage)
                 await addDoc(collection(this.db, "dedicatorias"), {
                     nombre: document.getElementById('nombre').value,
                     parentesco: document.getElementById('parentesco').value,
@@ -122,13 +156,13 @@ class FormularioDedicatoria {
                     fecha: new Date()
                 });
 
-                localStorage.removeItem('selectedTeam'); // Limpiar memoria limpia
+                localStorage.removeItem('selectedTeam');
 
                 alert("¡Gracias! Tu dedicatoria se guardó correctamente. ✨");
                 window.location.href = "paged.html";
 
             } catch (error) {
-                console.error("Error en el envío:", error);
+                console.error("Error en el envío desde el dispositivo:", error);
                 alert("Hubo un problema al enviar.");
                 btn.innerText = "Enviar Dedicatoria";
                 btn.disabled = false;
