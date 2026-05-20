@@ -439,7 +439,7 @@ function lanzarConfeti(canvas) {
     dibujar();
 }
 
-function showRevealModal() {
+/*function showRevealModal() {
     const existing = document.getElementById('customModalOverlay');
     if (existing) existing.remove();
 
@@ -449,9 +449,9 @@ function showRevealModal() {
 
     overlay.innerHTML = `
         <div class="custom-modal-box">
-            <span class="custom-modal-icon">👶</span>
+            <img src="elefanta.png" style="width:120px; height:120px; object-fit:contain; display:block; margin: 24px auto 0;">
             <div class="custom-modal-reveal-title">¡Es una Niña!</div>
-            <p class="custom-modal-msg">💖 ¡El bebé es una hermosa niña! El Team Niña tenía razón. ¡Felicidades a todos! 💖</p>
+            <p class="custom-modal-msg">💖 ¡El bebé es una hermosa niña! El Team Niña tenía razón. ¡Felicidades a todos!</p>
             <button class="custom-modal-btn pink" id="customModalBtn">💕 ¡Qué emoción!</button>
         </div>
     `;
@@ -463,7 +463,35 @@ function showRevealModal() {
         overlay.classList.remove('active');
         setTimeout(() => overlay.remove(), 300);
     });
+}*/
+
+function showRevealModal() {
+    const existing = document.getElementById('customModalOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'customModalOverlay';
+    overlay.className = 'custom-modal-overlay';
+
+    overlay.innerHTML = `
+        <div class="custom-modal-box">
+            <img src="elefante.png" style="width:120px; height:120px; object-fit:contain; display:block; margin: 24px auto 0;">
+            <div class="custom-modal-reveal-title" style="text-shadow: 0 0 10px rgba(0,191,255,0.9), 0 0 25px rgba(30,144,255,0.7);">¡Es un Niño!</div>
+            <p class="custom-modal-msg">💙 ¡El bebé es un hermoso niño! El Team Niño tenía razón. ¡Felicidades a todos!</p>
+            <button class="custom-modal-btn blue" id="customModalBtn">🎉 ¡Qué emoción!</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+
+    overlay.querySelector('#customModalBtn').addEventListener('click', () => {
+        overlay.classList.remove('active');
+        setTimeout(() => overlay.remove(), 300);
+    });
 }
+
+
 
 
 // ============================================================
