@@ -1,35 +1,4 @@
 // ============================================================
-//  ENVIO DE CORREO CON EMAILJS 
-// ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof emailjs !== 'undefined' && document.getElementById('confirmBtn')) {
-        emailjs.init("EYdnr2v63lN1la-8d");
-
-        const btnConfirmar = document.getElementById('confirmBtn');
-        btnConfirmar.addEventListener('click', () => {
-            const nombre = prompt("Por favor, ingresa tu nombre completo para confirmar tu asistencia:");
-            if (nombre !== null && nombre.trim() !== "") {
-                const templateParams = {
-                    message: nombre + " confirmó asistencia a la revelación de género 🎉"
-                };
-                emailjs.send("service_owk9la7", "template_bbhzefd", templateParams)
-                    .then(function (response) {
-                        alert("¡Muchas gracias " + nombre + "!\n\nTu asistencia fue confirmada correctamente 🎉");
-                        window.location.href = "pageb.html";
-                        console.log("Correo enviado", response);
-                    })
-                    .catch(function (error) {
-                        alert("Error enviando correo");
-                        console.log(error);
-                    });
-            } else if (nombre === "") {
-                alert("Debes ingresar un nombre");
-            }
-        });
-    }
-});
-
-// ============================================================
 //   CONFIGURACIÓN DE FIREBASE PARA GUARDAR DEDICATORIAS
 // ============================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -76,7 +45,7 @@ class FormularioDedicatoria {
         this.form = document.getElementById('dedicatoriaForm');
         this.cameraInput = document.getElementById('cameraInput');
         this.preview = document.getElementById('photoPreview');
-        this.fotoBase64 = ""; // Guardaremos la imagen optimizada aquí
+        this.fotoBase64 = ""; 
 
         if (this.form) {
             this.init();
@@ -94,17 +63,14 @@ class FormularioDedicatoria {
                         img.src = event.target.result;
 
                         img.onload = () => {
-                            // --- PROCESO DE COMPRESIÓN ULTRA-RÁPIDA ---
                             const canvas = document.createElement('canvas');
                             const ctx = canvas.getContext('2d');
 
-                            // Definimos un tamaño máximo ideal para el avatar del modal
                             const MAX_WIDTH = 400;
                             const MAX_HEIGHT = 400;
                             let width = img.width;
                             let height = img.height;
 
-                            // Mantenemos la proporción original de la foto
                             if (width > height) {
                                 if (width > MAX_WIDTH) {
                                     height *= MAX_WIDTH / width;
@@ -120,13 +86,10 @@ class FormularioDedicatoria {
                             canvas.width = width;
                             canvas.height = height;
 
-                            // Dibujamos la foto en el lienzo pequeño
                             ctx.drawImage(img, 0, 0, width, height);
 
-                            // Convertimos a Base64 reduciendo la calidad al 60% (pesa poquísimo y se ve genial)
                             this.fotoBase64 = canvas.toDataURL('image/jpeg', 0.6);
 
-                            // Mostramos la previsualización en el recuadro
                             this.preview.innerHTML = `<img src="${this.fotoBase64}" style="width:100%; height:100%; object-fit:cover;">`;
                         };
                     };
@@ -142,7 +105,6 @@ class FormularioDedicatoria {
             btn.disabled = true;
 
             try {
-                // Si no hay selfie, se usa la silueta por defecto
                 let fotoFinal = this.fotoBase64 || "https://cdn-icons-png.flaticon.com/512/3069/3069172.png";
 
                 const teamAsignado = localStorage.getItem('selectedTeam') || 'nino';
@@ -158,14 +120,28 @@ class FormularioDedicatoria {
 
                 localStorage.removeItem('selectedTeam');
 
-                alert("¡Gracias! Tu dedicatoria se guardó correctamente. ✨");
-                window.location.href = "paged.html";
+                showModal({
+                    icon: '✨',
+                    title: '¡Gracias!',
+                    msg: 'Tu dedicatoria se guardó correctamente y ya está en el árbol de la revelación.',
+                    btnLabel: '💛 Ver el árbol',
+                    btnStyle: 'gold',
+                    onClose: () => { window.location.href = "paged.html"; }
+                });
 
             } catch (error) {
                 console.error("Error en el envío desde el dispositivo:", error);
-                alert("Hubo un problema al enviar.");
-                btn.innerText = "Enviar Dedicatoria";
-                btn.disabled = false;
+                showModal({
+                    icon: '😔',
+                    title: 'Ups...',
+                    msg: 'Hubo un problema al enviar tu dedicatoria. Por favor intenta de nuevo.',
+                    btnLabel: 'Intentar de nuevo',
+                    btnStyle: 'ghost',
+                    onClose: () => {
+                        btn.innerText = "Enviar Dedicatoria";
+                        btn.disabled = false;
+                    }
+                });
             }
         });
     }
@@ -217,8 +193,8 @@ class ArbolRevelacion {
             });
         }
 
-        document.getElementById('btnRevelar')?.addEventListener('click', () => {
-            alert("🎉 ¡ES UNA HERMOSA NIÑA! 👶💖");
+        document.getElementById('cajaRevelacion')?.addEventListener('click', () => {
+            abrirModalPassword();
         });
     }
 
@@ -277,6 +253,218 @@ class ArbolRevelacion {
         this.overlay.classList.add('active');
     }
 }
+
+// ============================================================
+//  SISTEMA DE MODALES CUSTOM (reemplaza alert())
+// ============================================================
+function showModal({ icon, title, msg, btnLabel, btnStyle = 'gold', onClose }) {
+    const existing = document.getElementById('customModalOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'customModalOverlay';
+    overlay.className = 'custom-modal-overlay';
+
+    overlay.innerHTML = `
+        <div class="custom-modal-box">
+            <span class="custom-modal-icon">${icon}</span>
+            <div class="custom-modal-title">${title}</div>
+            <p class="custom-modal-msg">${msg}</p>
+            <button class="custom-modal-btn ${btnStyle}" id="customModalBtn">${btnLabel}</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+
+    overlay.querySelector('#customModalBtn').addEventListener('click', () => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.remove();
+            if (onClose) onClose();
+        }, 300);
+    });
+}
+
+function abrirModalPassword() {
+    const modal = document.getElementById('modalPassword');
+    const input = document.getElementById('inputPassword');
+    const error = document.getElementById('passwordError');
+    if (!modal) return;
+
+    input.value = '';
+    error.style.display = 'none';
+    modal.classList.add('active');
+    setTimeout(() => input.focus(), 300);
+
+    // Botón cancelar
+    document.getElementById('btnCancelarPassword').onclick = () => {
+        modal.classList.remove('active');
+    };
+
+    // Botón confirmar
+    document.getElementById('btnConfirmarPassword').onclick = () => verificarPassword();
+
+    // Enter en el input
+    input.onkeydown = (e) => { if (e.key === 'Enter') verificarPassword(); };
+}
+
+function verificarPassword() {
+    const input = document.getElementById('inputPassword');
+    const error = document.getElementById('passwordError');
+    const CLAVE = 'Gian372nco';
+
+    if (input.value === CLAVE) {
+        document.getElementById('modalPassword').classList.remove('active');
+        iniciarAnimacionEpica();
+    } else {
+        error.style.display = 'block';
+        input.value = '';
+        input.style.borderColor = '#ff6b8a';
+        input.style.boxShadow = '0 0 12px rgba(255,107,138,0.6)';
+        setTimeout(() => {
+            input.style.borderColor = '';
+            input.style.boxShadow = '';
+        }, 1200);
+        input.focus();
+    }
+}
+
+function iniciarAnimacionEpica() {
+    const cajaImg = document.getElementById('cajaImg');
+    const overlay = document.getElementById('animacionEpica');
+    const caja2 = document.getElementById('cajaAbiertaEpica');
+    const brillo = document.getElementById('brilloExplosion');
+    const humo = document.getElementById('humoMagico');
+    const canvas = document.getElementById('confettiCanvas');
+
+    // 1. Temblor en la caja cerrada
+    cajaImg.classList.add('temblando');
+
+    setTimeout(() => {
+        cajaImg.classList.remove('temblando');
+
+        // 2. Oscurecer pantalla y mostrar overlay épico
+        overlay.classList.add('activa');
+
+        // 3. Explosión de brillo
+        brillo.classList.add('explotar');
+        humo.classList.add('activo');
+
+        // 4. Lanzar confeti
+        lanzarConfeti(canvas);
+
+        // 5. Mostrar caja abierta con animación
+        setTimeout(() => {
+            caja2.classList.add('visible');
+        }, 200);
+
+        // 6. Después de 3.5 segundos, mostrar modal revelación
+        setTimeout(() => {
+            overlay.classList.remove('activa');
+            brillo.classList.remove('explotar');
+            humo.classList.remove('activo');
+            caja2.classList.remove('visible');
+            showRevealModal();
+        }, 3500);
+
+    }, 900);
+}
+
+function lanzarConfeti(canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const COLORES = [
+        '#ff9dd0', '#ff69b4', '#ff1493',  // rosas
+        '#9de4ff', '#00bfff', '#1e90ff',  // azules
+        '#ffd700', '#ffec6e', '#fff9c4',  // dorados
+        '#ffffff', '#c084fc', '#f0abfc',  // blancos/morados
+    ];
+
+    const particulas = [];
+    const TOTAL = 220;
+
+    for (let i = 0; i < TOTAL; i++) {
+        particulas.push({
+            x: canvas.width / 2 + (Math.random() - 0.5) * 100,
+            y: canvas.height / 2,
+            vx: (Math.random() - 0.5) * 18,
+            vy: (Math.random() - 0.5) * 18 - 8,
+            size: Math.random() * 10 + 4,
+            color: COLORES[Math.floor(Math.random() * COLORES.length)],
+            rotation: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 8,
+            gravity: 0.25 + Math.random() * 0.2,
+            alpha: 1,
+            shape: Math.random() > 0.5 ? 'rect' : 'circle',
+        });
+    }
+
+    let frame = 0;
+    const MAX_FRAMES = 180;
+
+    function dibujar() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particulas.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += p.gravity;
+            p.vx *= 0.99;
+            p.rotation += p.rotSpeed;
+            p.alpha = Math.max(0, 1 - frame / MAX_FRAMES);
+
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+
+            if (p.shape === 'circle') {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+            }
+            ctx.restore();
+        });
+
+        frame++;
+        if (frame < MAX_FRAMES) requestAnimationFrame(dibujar);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    dibujar();
+}
+
+function showRevealModal() {
+    const existing = document.getElementById('customModalOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'customModalOverlay';
+    overlay.className = 'custom-modal-overlay';
+
+    overlay.innerHTML = `
+        <div class="custom-modal-box">
+            <span class="custom-modal-icon">👶</span>
+            <div class="custom-modal-reveal-title">¡Es una Niña!</div>
+            <p class="custom-modal-msg">💖 ¡El bebé es una hermosa niña! El Team Niña tenía razón. ¡Felicidades a todos! 💖</p>
+            <button class="custom-modal-btn pink" id="customModalBtn">💕 ¡Qué emoción!</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+
+    overlay.querySelector('#customModalBtn').addEventListener('click', () => {
+        overlay.classList.remove('active');
+        setTimeout(() => overlay.remove(), 300);
+    });
+}
+
 
 // ============================================================
 //  INICIALIZACIÓN DE INSTANCIAS DEL PROYECTO

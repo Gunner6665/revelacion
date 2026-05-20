@@ -197,6 +197,37 @@ html {
     box-shadow: 0 0 15px #6a1b9a;
 }
 
+/* Cuando btn-secondary se usa en inputs/textarea del formulario */
+input.btn-secondary,
+textarea.btn-secondary {
+    color: #fff;
+    text-shadow: none;
+    font-weight: 300;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    cursor: text;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input.btn-secondary:focus,
+textarea.btn-secondary:focus {
+    border-color: #9c4dcc;
+    box-shadow: 0 0 12px rgba(156, 77, 204, 0.5);
+}
+
+input.btn-secondary::placeholder,
+textarea.btn-secondary::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    text-shadow: none;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+}
+
 .team-counter {
     position: absolute;
     bottom: 20px;
@@ -420,6 +451,120 @@ html {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* ============================================================
+   MODALES CUSTOM (reemplazo de alert)
+   ============================================================ */
+
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.custom-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.custom-modal-box {
+    width: 100%;
+    max-width: 340px;
+    background: rgba(12, 12, 22, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+    overflow: hidden;
+    animation: modalIn 0.3s ease;
+    text-align: center;
+}
+
+.custom-modal-icon {
+    font-size: 3.5rem;
+    margin: 28px 0 10px;
+    display: block;
+    line-height: 1;
+}
+
+.custom-modal-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    color: #fff;
+    margin: 0 22px 8px;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 193, 7, 0.6);
+}
+
+.custom-modal-msg {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    margin: 0 24px 24px;
+}
+
+.custom-modal-btn {
+    display: block;
+    width: calc(100% - 44px);
+    margin: 0 22px 22px;
+    padding: 13px;
+    border-radius: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.custom-modal-btn:hover {
+    opacity: 0.85;
+}
+
+.custom-modal-btn.gold {
+    background: linear-gradient(135deg, #f5c842, #e0a020);
+    color: #1a1000;
+    font-weight: 600;
+}
+
+.custom-modal-btn.pink {
+    background: linear-gradient(135deg, #ff9dd0, #e0508a);
+    color: #3a0020;
+    font-weight: 600;
+}
+
+.custom-modal-btn.ghost {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+}
+
+/* Revelación especial */
+.custom-modal-reveal-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #fff;
+    margin: 0 22px 10px;
+    text-shadow:
+        0 0 10px rgba(255, 105, 180, 0.9),
+        0 0 25px rgba(255, 20, 147, 0.7),
+        0 0 40px rgba(255, 0, 255, 0.5);
+}
+
 /* Contenedor del mapa del árbol */
 .tree-container {
     position: relative;
@@ -480,4 +625,198 @@ html {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #fff;
+}
+/* ============================================================
+   CAJA MÁGICA DE REVELACIÓN
+   ============================================================ */
+
+.caja-regalo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.caja-img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.5));
+    transition: transform 0.15s ease;
+    animation: cajaFloat 3s ease-in-out infinite;
+}
+
+.caja-regalo:hover .caja-img,
+.caja-regalo:active .caja-img {
+    transform: scale(1.07);
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9));
+}
+
+@keyframes cajaFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+}
+
+.caja-hint {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 8px 0 0;
+    font-family: 'Oswald', sans-serif;
+    animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1; }
+}
+
+/* ============================================================
+   ANIMACIÓN ÉPICA (overlay completo)
+   ============================================================ */
+
+.animacion-epica-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 8000;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: background 0.8s ease, opacity 0.3s ease;
+}
+
+.animacion-epica-overlay.activa {
+    opacity: 1;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.88);
+}
+
+/* Canvas de confeti — cubre todo */
+#confettiCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Caja abierta centrada */
+.caja-abierta-epica {
+    position: relative;
+    z-index: 2;
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.4) rotate(-8deg);
+    transition: none;
+    filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.9))
+            drop-shadow(0 0 80px rgba(255, 215, 0, 0.6));
+}
+
+.caja-abierta-epica.visible {
+    animation: cajaAbiertaEntrada 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes cajaAbiertaEntrada {
+    0%   { opacity: 0; transform: scale(0.3) rotate(-12deg); }
+    60%  { opacity: 1; transform: scale(1.15) rotate(4deg); }
+    80%  { transform: scale(0.95) rotate(-2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Brillo/explosión radial al centro */
+.brillo-explosion {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 215, 0, 0.7) 20%,
+        rgba(255, 105, 180, 0.5) 45%,
+        rgba(100, 180, 255, 0.3) 65%,
+        transparent 75%
+    );
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.brillo-explosion.explotar {
+    animation: explotar 1.2s ease-out forwards;
+}
+
+@keyframes explotar {
+    0%   { opacity: 1; transform: scale(0); }
+    40%  { opacity: 0.9; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(2.5); }
+}
+
+/* Humo/partículas mágicas */
+.humo-magico {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.humo-magico::before,
+.humo-magico::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+}
+
+.humo-magico.activo::before {
+    background: radial-gradient(circle, rgba(255,105,180,0.6), transparent 70%);
+    animation: humo1 1.5s ease-out 0.1s forwards;
+}
+.humo-magico.activo::after {
+    background: radial-gradient(circle, rgba(100,200,255,0.5), transparent 70%);
+    animation: humo1 1.5s ease-out 0.3s forwards;
+}
+
+@keyframes humo1 {
+    0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+    100% { transform: translate(-50%, -120%) scale(4); opacity: 0; }
+}
+
+/* Shake de la caja antes de abrir */
+@keyframes cajaTemblor {
+    0%,100% { transform: translateX(0) rotate(0deg); }
+    10%     { transform: translateX(-6px) rotate(-3deg); }
+    20%     { transform: translateX(6px) rotate(3deg); }
+    30%     { transform: translateX(-8px) rotate(-4deg); }
+    40%     { transform: translateX(8px) rotate(4deg); }
+    50%     { transform: translateX(-10px) rotate(-5deg); }
+    60%     { transform: translateX(10px) rotate(5deg); }
+    70%     { transform: translateX(-6px) rotate(-3deg); }
+    80%     { transform: translateX(6px) rotate(3deg); }
+    90%     { transform: translateX(-3px) rotate(-1deg); }
+}
+
+.caja-img.temblando {
+    animation: cajaTemblor 0.8s ease-in-out,
+               cajaBrillo 0.8s ease-in-out;
+}
+
+@keyframes cajaBrillo {
+    0%,100% { filter: drop-shadow(0 0 18px rgba(255,215,0,0.5)); }
+    25%     { filter: drop-shadow(0 0 40px rgba(255,20,147,1)) brightness(1.3); }
+    50%     { filter: drop-shadow(0 0 60px rgba(100,200,255,1)) brightness(1.5); }
+    75%     { filter: drop-shadow(0 0 40px rgba(255,215,0,1)) brightness(1.4); }
 }

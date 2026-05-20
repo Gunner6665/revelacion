@@ -36,11 +36,16 @@
                 </div>
             </div>
 
-            <div style="margin-top: 25px;">
-                <button id="btnRevelar" class="btn-primary">✨ Revelar Género Real ✨</button>
+            <!-- CAJA MÁGICA DE REVELACIÓN -->
+            <div style="margin-top: 25px; display: flex; flex-direction: column; align-items: center;">
+                <div id="cajaRevelacion" class="caja-regalo">
+                    <img id="cajaImg" src="caja1.png" alt="Caja de revelación" class="caja-img">
+                    <p class="caja-hint">Toca para revelar el género 🎁</p>
+                </div>
             </div>
         </div>
 
+        <!-- MODAL DEDICATORIAS (elefantitos) -->
         <div class="modal-overlay" id="modalOverlay">
             <div class="modal-card">
                 <div class="modal-header">
@@ -56,6 +61,34 @@
                 </div>
                 <button class="modal-close" id="modalCloseBtn">✕ Volver al árbol</button>
             </div>
+        </div>
+
+        <!-- MODAL CONTRASEÑA -->
+        <div class="custom-modal-overlay" id="modalPassword">
+            <div class="custom-modal-box">
+                <span class="custom-modal-icon">🔐</span>
+                <div class="custom-modal-title">Acceso Secreto</div>
+                <p class="custom-modal-msg">Solo quien sabe el secreto puede abrir esta caja...</p>
+                <input type="password" id="inputPassword" placeholder="CONTRASEÑA SECRETA" class="btn-secondary"
+                    style="background: rgba(255,255,255,0.08); text-align:center; width: calc(100% - 44px); margin: 0 22px; display:block;">
+                <p id="passwordError"
+                    style="color:#ff6b8a; font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; margin: 8px 22px 0; display:none;">
+                    ✕ Contraseña incorrecta</p>
+                <div style="display:flex; gap:10px; margin: 18px 22px 22px;">
+                    <button class="custom-modal-btn ghost" id="btnCancelarPassword"
+                        style="flex:1; margin:0;">Cancelar</button>
+                    <button class="custom-modal-btn gold" id="btnConfirmarPassword" style="flex:1; margin:0;">Abrir
+                        🗝️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE ANIMACIÓN ÉPICA -->
+        <div id="animacionEpica" class="animacion-epica-overlay">
+            <canvas id="confettiCanvas"></canvas>
+            <div id="humoMagico" class="humo-magico"></div>
+            <div id="brilloExplosion" class="brillo-explosion"></div>
+            <img id="cajaAbiertaEpica" src="caja2.png" class="caja-abierta-epica" alt="caja abierta">
         </div>
     </div>
 
