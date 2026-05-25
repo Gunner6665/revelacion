@@ -826,3 +826,77 @@ textarea.btn-secondary::placeholder {
     color: #001a3a;
     font-weight: 600;
 }
+
+/* ============================================================
+   BOTÓN FLOTANTE ESQUINA INFERIOR DERECHA (INDEX -> PAGED)
+   ============================================================ */
+.tree-floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    text-decoration: none;
+    z-index: 9999;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Efecto al pasar el mouse por encima del árbol */
+.tree-floating-btn:hover {
+    transform: scale(1.15) rotate(5deg);
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Creación del letrero flotante "Ver huellitas" usando pseudoelementos */
+.tree-floating-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 60px; /* Se posiciona justo encima del emoji */
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Muestra el mensaje al hacer hover */
+.tree-floating-btn:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optimización para que en celulares no estorbe demasiado */
+@media (max-width: 480px) {
+    .tree-floating-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.4rem;
+    }
+    .tree-floating-btn::after {
+        bottom: 55px;
+    }
+}
