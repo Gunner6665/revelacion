@@ -439,7 +439,7 @@ function lanzarConfeti(canvas) {
     dibujar();
 }
 
-/*function showRevealModal() {
+function showRevealModal() {
     const existing = document.getElementById('customModalOverlay');
     if (existing) existing.remove();
 
@@ -463,9 +463,9 @@ function lanzarConfeti(canvas) {
         overlay.classList.remove('active');
         setTimeout(() => overlay.remove(), 300);
     });
-}*/
+}
 
-function showRevealModal() {
+/*function showRevealModal() {
     const existing = document.getElementById('customModalOverlay');
     if (existing) existing.remove();
 
@@ -489,7 +489,7 @@ function showRevealModal() {
         overlay.classList.remove('active');
         setTimeout(() => overlay.remove(), 300);
     });
-}
+}*/
 
 
 
